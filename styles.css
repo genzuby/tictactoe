@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+*,
+*::after,
+*::before {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body,
+html {
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  min-width: 480px;
+  min-height: 300px;
+  overflow: auto;
+}
+
+header {
+  background-color: #000;
+  height: 80px;
+}
+
+header .title {
+  text-align: center;
+  height: inherit;
+  padding: 0.4em 0;
+  color: #fff;
+  font-size: 2.5em;
+}
+
+header .title span {
+  font-size: 60%;
+  color: #1181c2;
+  padding: 0.5em 1em;
+}
+
+.container {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container .opponent {
+  width: 300px;
+  padding-bottom: 1.2em;
+  font-size: 1.5em;
+}
+
+.container .opponent .select-type {
+  padding: 0 1em;
+}
+
+.container .game-history {
+  width: 300px;
+  padding-top: 2em;
+}
+
+.container .board {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (auto)[3];
+      grid-template-columns: repeat(3, auto);
+  border: none;
+}
+
+.container .board .board-cell {
+  border: 3px solid #1181c2;
+  height: 100px;
+  width: 100px;
+  font-size: 4em;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.container .board .board-cell:hover {
+  background-color: rgba(17, 129, 194, 0.2);
+}
+
+.container .board .board-cell:first-child, .container .board .board-cell:nth-child(2), .container .board .board-cell:nth-child(3) {
+  border-top: none;
+}
+
+.container .board .board-cell:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.container .board .board-cell:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.container .board .board-cell:last-child, .container .board .board-cell:nth-child(8), .container .board .board-cell:nth-child(7) {
+  border-bottom: none;
+}
+
+.modal,
+.modal-wait {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal .modal-box,
+.modal-wait .modal-box {
+  background-color: #52c41d;
+  color: #fff;
+  width: 50vw;
+  height: 40vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.modal .modal-box .modal-close,
+.modal-wait .modal-box .modal-close {
+  color: #fff;
+  padding: 0.5em;
+  float: right;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.modal .modal-box .modal-content,
+.modal-wait .modal-box .modal-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.modal .modal-box .modal-content img,
+.modal-wait .modal-box .modal-content img {
+  margin-top: 2em;
+  width: 100px;
+  height: 100px;
+}
+
+.modal .modal-box .modal-content h,
+.modal-wait .modal-box .modal-content h {
+  margin: 0;
+  padding: 0;
+}
+
+.btn {
+  height: 40px;
+  font-size: 0.8em;
+  font-weight: 4;
+  background-color: rgba(17, 129, 194, 0.8);
+  color: #fff;
+  border: #1181c2;
+  border-radius: 5px;
+}
+
+.btn-history {
+  width: 100%;
+  margin: 0.2em;
+  font-size: 1em;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #999;
+  background-color: rgba(153, 153, 153, 0.3);
+  color: #999;
+}
+/*# sourceMappingURL=styles.css.map */

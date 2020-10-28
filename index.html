@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./styles.css" rel='stylesheet' type="text/css">
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <header>
+        <div class="title">Tic Tac Toe<span id='matchpartner'>with Human</span></div>
+    </header>
+    <div class="container">
+        <div class="opponent">
+            <div class="select-type">
+                <input type="radio" name='opponent-type' id='human' checked='checked'><label for='human'>Human</label>
+                <input type="radio" name='opponent-type' id='computer'><label for='computer'>Computer</label>
+            </div>
+        </div>
+        <div class="board">
+            <div class="board-cell" id='1'></div>
+            <div class="board-cell" id='2'></div>
+            <div class="board-cell" id='3'></div>
+            <div class="board-cell" id='4'></div>
+            <div class="board-cell" id='5'></div>
+            <div class="board-cell" id='6'></div>
+            <div class="board-cell" id='7'></div>
+            <div class="board-cell" id='8'></div>
+            <div class="board-cell" id='9'></div>
+        </div>
+        <div class="game-history">
+            <button class="btn btn-history" id='get-back'>Back</button>
+        </div>
+    </div>
+    <div class="modal" id="game-result-modal">
+        <div class="modal-box">
+            <span class="modal-close">X</span>
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <div class="modal-wait"></div>
+    <script src="script.js"></script>
+</body>
+</html>

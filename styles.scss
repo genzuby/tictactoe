@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+$main-color: #1181c2;
+$header-background: #000;
+$header-text: #fff;
+$disable-info: #999;
+$modal-background: #52c41d;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  min-width: 480px;
+  min-height: 300px;
+  overflow: auto;
+}
+
+header {
+  background-color: $header-background;
+  height: 80px;
+
+  .title {
+    text-align: center;
+    height: inherit;
+    padding: 0.4em 0;
+    color: $header-text;
+    font-size: 2.5em;
+
+    span {
+      font-size: 60%;
+      color: $main-color;
+      padding: 0.5em 1em;
+    }
+  }
+}
+
+.container {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .opponent {
+    width: 300px;
+    padding-bottom: 1.2em;
+    font-size: 1.5em;
+
+    .select-type {
+      padding: 0 1em;
+    }
+  }
+
+  .game-history {
+    width: 300px;
+    padding-top: 2em;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    border: none;
+
+    .board-cell {
+      border: 3px solid $main-color;
+      height: 100px;
+      width: 100px;
+      font-size: 4em;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: rgba($main-color, 0.2);
+      }
+
+      &:first-child,
+      &:nth-child(2),
+      &:nth-child(3) {
+        border-top: none;
+      }
+
+      &:nth-child(3n + 1) {
+        border-left: none;
+      }
+
+      &:nth-child(3n + 3) {
+        border-right: none;
+      }
+
+      &:last-child,
+      &:nth-child(8),
+      &:nth-child(7) {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.modal,
+.modal-wait {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: rgba($header-background, 0.2);
+
+  .modal-box {
+    background-color: $modal-background;
+    color: $header-text;
+    width: 50vw;
+    height: 40vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .modal-close {
+      color: $header-text;
+      padding: 0.5em;
+      float: right;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      text-align: center;
+
+      img {
+        margin-top: 2em;
+        width: 100px;
+        height: 100px;
+      }
+
+      h {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.btn {
+  height: 40px;
+  font-size: 0.8em;
+  font-weight: 4;
+  background-color: rgba($main-color, 0.8);
+  color: $header-text;
+  border: $main-color;
+  border-radius: 5px;
+}
+
+.btn-history {
+  width: 100%;
+  margin: 0.2em;
+  font-size: 1em;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid $disable-info;
+  background-color: rgba($disable-info, 0.3);
+  color: $disable-info;
+}
