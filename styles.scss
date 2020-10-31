@@ -119,6 +119,7 @@ header {
   overflow: hidden;
   background-color: rgba($header-background, 0.2);
 
+
   .modal-box {
     background-color: $modal-background;
     color: $header-text;
@@ -157,6 +158,21 @@ header {
       }
     }
   }
+
+  .modal-wait-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+
+    img {
+      width: 70px;
+      height: 70px;
+      margin-top: 1em;
+      animation: aiturn 2000ms;
+    }
+  }
 }
 
 .btn {
@@ -180,4 +196,13 @@ button[disabled] {
   border: 1px solid $disable-info;
   background-color: rgba($disable-info, 0.3);
   color: $disable-info;
+}
+
+@keyframes aiturn {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

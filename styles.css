@@ -182,6 +182,33 @@ header .title span {
   padding: 0;
 }
 
+.modal .modal-wait-content,
+.modal-wait .modal-wait-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1.5em;
+}
+
+.modal .modal-wait-content img,
+.modal-wait .modal-wait-content img {
+  width: 70px;
+  height: 70px;
+  margin-top: 1em;
+  -webkit-animation: aiturn 2000ms;
+          animation: aiturn 2000ms;
+}
+
 .btn {
   height: 40px;
   font-size: 0.8em;
@@ -203,5 +230,27 @@ button[disabled] {
   border: 1px solid #999;
   background-color: rgba(153, 153, 153, 0.3);
   color: #999;
+}
+
+@-webkit-keyframes aiturn {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes aiturn {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 /*# sourceMappingURL=styles.css.map */

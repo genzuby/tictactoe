@@ -52,6 +52,7 @@ function Game() {
 
 function Board() {
   this.positions = Array.from(document.querySelectorAll('.board-cell'));
+  this.posArr = Array.from(Array(9).keys())
   this.history = [];
 
   //   push data into array to save history
@@ -67,36 +68,8 @@ function Board() {
   // clear history
   this.resetHistory = function () {
     this.history = [];
+    this.posArr = Array.from(Array(9).keys())
     this.positions.forEach((el) => (el.innerText = ''));
-  };
-
-  //check winner
-  this.chkWinnder = function () {
-    let isWin = false;
-    const WINNING_COMBO = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    const positions = this.positions;
-    WINNING_COMBO.forEach((combo) => {
-      const p0Text = positions[combo[0]].innerText;
-      const p1Text = positions[combo[1]].innerText;
-      const p2Text = positions[combo[2]].innerText;
-      const isWinningCombo =
-        p0Text !== '' && p0Text === p1Text && p1Text === p2Text;
-      if (isWinningCombo) {
-        isWin = true;
-      }
-    });
-
-    return isWin;
   };
 }
 
@@ -128,6 +101,34 @@ function Play(board) {
     _btnBack.disabled = false;
   };
 
+  //check winner
+  this.chkWinner = function (positions) {
+    let isWin = false;
+    const WINNING_COMBO = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    WINNING_COMBO.forEach((combo) => {
+      const p0Text = positions[combo[0]];
+      const p1Text = positions[combo[1]];
+      const p2Text = positions[combo[2]];
+      const isWinningCombo =
+        p0Text !== '' && p0Text === p1Text && p1Text === p2Text;
+      if (isWinningCombo) {
+        isWin = true;
+      }
+    });
+
+    return isWin;
+  };
+
   function _takeTurn(event) {
     let _targetText = event.target.innerText;
     _isNewGame = false;
@@ -135,6 +136,7 @@ function Play(board) {
     if (_targetText === '') {
       event.target.innerText = _marker;
       board.setHistory(event.target.id);
+      board.posArr[parseInt(event.target.id)-1] = _marker;
       _marker = _marker === 'O' ? 'X' : 'O';
       _isBack = false;
 
@@ -158,23 +160,83 @@ function Play(board) {
   }
 
   function _autoPlay() {
-    let availPos = board.positions.filter((p) => p.innerText === '');
-    const getRandomPos = Math.floor(Math.random() * (availPos.length - 0));
+    const {index} = _miniMax(board.posArr, 'computer')
     const _modal = document.querySelector('.modal-wait');
     _modal.style.display = 'block';
-
+    
     const calcCom = new Promise((res, rej) => {
-      setTimeout(res, 2000);
+      setTimeout(res, 1000);
     });
-
+    
     calcCom.then(() => {
       if (board.history.length < 9 && !_isNewGame) {
-        availPos[getRandomPos].innerText = 'X';
-        board.setHistory(getRandomPos + 1);
+        board.positions[index].innerText = 'X';
+        board.setHistory(index + 1);
+        board.posArr[index] = 'X'
       }
       _modal.style.display = 'none';
       _endGame();
     });
+  }
+
+  // AI mimimax algorithm
+  _miniMax = (vBoardPos, player) => {
+    const isWinner = this.chkWinner(vBoardPos);   // true or false 
+    let availPos = vBoardPos.reduce((cum, pos, idx) => {
+      if(typeof pos==='number') cum.push(idx)
+      return cum;
+    },[])
+
+    let bestValue, bestPos
+    let moves = []
+
+    if(isWinner && _isPlayYou){
+      // if human win
+      return {score : -1}
+    }else if(isWinner && !_isPlayYou){
+      // if ai win
+      return {score : 1}
+    }else if(availPos.length === 0){ 
+      return {score : 0}
+    }
+    availPos.forEach((pos)=>{
+      let move = {}
+      
+      move.index = vBoardPos[pos] 
+      vBoardPos[pos] = player === 'computer'?'X':'O'
+
+      if(player==='computer'){
+        _isPlayYou = false;
+        let result = _miniMax(vBoardPos, 'human')
+        move.score = result.score
+      }else{
+        _isPlayYou = true;
+        let result = _miniMax(vBoardPos, 'computer')
+        move.score = result.score
+      }
+      vBoardPos[pos] = move.index;
+      moves.push(move)
+    })
+
+    if(player === 'computer'){
+      bestValue = -100000
+      moves.forEach((move,i) =>{
+          if(move.score > bestValue){
+            bestValue = move.score
+            bestPos = i
+          }
+      })
+    }else {
+      bestValue = 100000
+      moves.forEach((move,i) =>{
+          if(move.score < bestValue){
+            bestValue = move.score
+            bestPos = i
+          }
+      })
+    }
+
+    return moves[bestPos];
   }
 
   function _handleBack() {
@@ -186,6 +248,7 @@ function Play(board) {
         if (board.history.length === 0) return;
         const lastPosition = board.getHistory();
         document.getElementById(lastPosition).innerText = '';
+        board.posArr[lastPosition - 1] = lastPosition - 1
         _btnBack.disabled = true;
         _isPlayYou = true;
         _isBack = true;
@@ -195,8 +258,8 @@ function Play(board) {
   }
 
   _endGame = () => {
-    const isGetWinner = board.chkWinnder();
-    const isEvenGame = board.history.length === 9 && !board.chkWinnder();
+    const isGetWinner = this.chkWinner(board.posArr);
+    const isEvenGame = board.history.length === 9 && !this.chkWinner(board.posArr);
 
     if (isGetWinner || isEvenGame) {
       //get winner and Game end OR even Game
@@ -210,7 +273,6 @@ function Play(board) {
           }'><h1> You ${_isPlayYou ? 'Win' : 'Lose'}!</h1>`;
         else if (isEvenGame)
           message = `<img src='./assets/even.svg'><h1>Even Game!</h1>`;
-        console.log(message);
         return message;
       };
 
